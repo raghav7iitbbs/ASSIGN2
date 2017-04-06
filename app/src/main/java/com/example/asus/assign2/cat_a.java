@@ -51,7 +51,7 @@ public class cat_a extends Fragment {
         qty=new String[100];
         cat=new String[100];
         subcat=new String[100];
-        //initiallizing the arrays to 0
+        //initiallizing  to 0
         for(i=0;i<100;++i) {
             name[i] = null;
             price[i] = null;
@@ -90,7 +90,7 @@ public class cat_a extends Fragment {
         String sc[];
         @Override
         public int getCount() {
-            int count=0;
+            int count=-1;             // to avoid skipping of list 1 element
             n=new String[100];
             q=new String[100];
             p=new String[100];
@@ -113,6 +113,7 @@ public class cat_a extends Fragment {
                     sc[count] = subcat[i];
                 }
             }
+            Log.e("count",count+"");
             return count;
 
         }
@@ -137,6 +138,7 @@ public class cat_a extends Fragment {
 
             add=(Button)view.findViewById(R.id.add);
             sub=(Button)view.findViewById(R.id.sub);
+            Log.e("view",""+i);
 
             nameText.setText(n[i]);
             priceText.setText(p[i]);
@@ -149,18 +151,19 @@ public class cat_a extends Fragment {
                 public void onClick(View v) {
                     int temp=Integer.parseInt(q[pos]);
                     ++temp;
-                    Log.e("temp"," "+temp);
+                    Log.e("add"," "+pos);
                     q[pos]=Integer.toString(temp);
                     qtyText.setText(q[pos]);
                     int c=0;
                     cursor.moveToFirst();
-                    while(cursor.moveToNext() && c<100){
+                    do{
                         if(cursor.getString(1).equals(n[pos]))
                         {
-                            helper.updateData(Integer.toString(c),n[pos],q[pos],p[pos]);
+                            helper.updateData(Integer.toString(1+c),n[pos],q[pos],p[pos]);
+                            break;
                         }
                         ++c;
-                    }
+                    }while (cursor.moveToNext() && c<100);
                 }
             });
 
@@ -174,13 +177,14 @@ public class cat_a extends Fragment {
                         q[pos]=Integer.toString(temp);
                         int c=0;
                         cursor.moveToFirst();
-                        while(cursor.moveToNext() && c<100){
+                        do {
                             if(cursor.getString(1).equals(n[pos]))
                             {
-                                helper.updateData(Integer.toString(c),n[pos],q[pos],p[pos]);
+                                helper.updateData(Integer.toString(1+c),n[pos],q[pos],p[pos]);
+                                break;
                             }
                             ++c;
-                        }
+                        }while(cursor.moveToNext() && c<100);
                     }
                     qtyText.setText(q[pos]);
                 }

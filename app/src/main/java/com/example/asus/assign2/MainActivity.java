@@ -10,30 +10,53 @@ import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import android.content.Intent;
+import android.database.Cursor;
+
+
 
 public class MainActivity extends AppCompatActivity {
 
     //Declaring the textviews
-    TextView newOrder,orderPlaced;
-    String name[]={"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
-    int qty[]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-    int price[]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    TextView newOrder,orderPlaced,button1;
+    LeafyDBhelper helper;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Bundle b = getIntent().getExtras();
 
-        if(b!=null) {
-            name = b.getStringArray("name");
-            qty=b.getIntArray("qty");
-            price=b.getIntArray("price");
-
-        }
         newOrder = (TextView)findViewById(R.id.textView);
         orderPlaced=(TextView)findViewById(R.id.textView2);
+
+
+        helper = new LeafyDBhelper(this);
+
+        Cursor cursor=helper.getAllData();
+        if(cursor.getCount()==0) {
+
+            //setting up the database by inserting values
+            for (int i = 1; i <= 100; ++i) {
+                int randprice = (int) (Math.random() * 100 + 1);   // random function
+
+                if (i <= 17) {
+                    helper.insertData("A" + i, "1", "A", Integer.toString(randprice), "0");
+                } else if (i <= 34) {
+                    helper.insertData("A" + i, "2", "A", Integer.toString(randprice), "0");
+                } else if (i <= 17 * 3) {
+                    helper.insertData("A" + i, "1", "B", Integer.toString(randprice), "0");
+                } else if (i <= 17 * 4) {
+                    helper.insertData("A" + i, "2", "B", Integer.toString(randprice), "0");
+                } else if (i <= 17 * 5) {
+                    helper.insertData("A" + i, "1", "C", Integer.toString(randprice), "0");
+                } else {
+                    helper.insertData("A" + i, "2", "C", Integer.toString(randprice), "0");
+                }
+
+            }
+        }
 
 
         newOrder.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
 
 
 

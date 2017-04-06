@@ -53,7 +53,7 @@ public class cat_c extends Fragment {
         qty=new String[100];
         cat=new String[100];
         subcat=new String[100];
-        //initiallizing the arrays to 0
+        //initiallizing  to 0
         for(i=0;i<100;++i) {
             name[i] = null;
             price[i] = null;
@@ -93,7 +93,7 @@ public class cat_c extends Fragment {
 
         @Override
         public int getCount() {
-            int count=0;
+            int count=-1;       // to avoid skipping of list 1 element
             n=new String[100];
             q=new String[100];
             p=new String[100];
@@ -133,7 +133,7 @@ public class cat_c extends Fragment {
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            //setting up the views in listview
+
             view=((Activity)getContext()).getLayoutInflater().inflate(R.layout.listview,null);
             TextView priceText=(TextView)view.findViewById(R.id.pricetext);
             TextView nameText=(TextView)view.findViewById(R.id.nametext);
@@ -155,13 +155,14 @@ public class cat_c extends Fragment {
                     qtyText.setText(q[pos]);
                     cursor.moveToFirst();
                     int c=0;
-                    while(cursor.moveToNext() && c<100){
+                    do {
                         if(cursor.getString(1).equals(n[pos]))
                         {
-                            helper.updateData(Integer.toString(c),n[pos],q[pos],p[pos]);
+                            helper.updateData(Integer.toString(1+c),n[pos],q[pos],p[pos]);
+                            break;
                         }
                         ++c;
-                    }
+                    }while(cursor.moveToNext() && c<100);
                 }
             });
 
@@ -174,13 +175,14 @@ public class cat_c extends Fragment {
                         q[pos]=Integer.toString(temp);
                         cursor.moveToFirst();
                         int c=0;
-                        while(cursor.moveToNext() && c<100){
+                        do {
                             if(cursor.getString(1).equals(n[pos]))
                             {
-                                helper.updateData(Integer.toString(c),n[pos],q[pos],p[pos]);
+                                helper.updateData(Integer.toString(1+c),n[pos],q[pos],p[pos]);
+                                break;
                             }
                             ++c;
-                        }
+                        }while(cursor.moveToNext() && c<100);
                     }
                     qtyText.setText(q[pos]);
                 }

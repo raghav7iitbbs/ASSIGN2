@@ -44,7 +44,7 @@ public class neworder extends AppCompatActivity{
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Toast.makeText(getApplicationContext(),"Order stored",Toast.LENGTH_SHORT).show();
+
                 Intent intent = new Intent(neworder.this, MainActivity.class);
                 Bundle bundle=new Bundle();
                 bundle.putStringArray("name",name);

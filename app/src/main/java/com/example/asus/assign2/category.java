@@ -14,41 +14,26 @@ import android.widget.Toast;
 
 public class category extends AppCompatActivity implements View.OnClickListener {
 
-    TextView cat1,cat2;
+    TextView cat1,cat2,button1;
     LeafyDBhelper helper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.screen2);
 
-        cat1=(TextView)findViewById(R.id.textView3);
-        cat2=(TextView)findViewById(R.id.textView4);
+        cat1 = (TextView) findViewById(R.id.textView3);
+        cat2 = (TextView) findViewById(R.id.textView4);
+        button1 = (TextView)findViewById(R.id.textView9);
 
         cat1.setOnClickListener(this);
         cat2.setOnClickListener(this);
-        //this constructor creates the data base in our phone
-        helper=new LeafyDBhelper(this);
-        //delete all data previously present in the table so that repetion doesn't occur
-        helper.deleteAll();
-        //inserting the data in the database
-        for(int i=1;i<100;++i){
-            int randprice=(int )(Math. random() * 100 + 1);
 
-            if(i<=17)
-                helper.insertData("A"+i,"1","A",Integer.toString(randprice),"0");
-            else if(i<=34)
-                helper.insertData("A"+i,"1","B",Integer.toString(randprice),"0");
-            else if(i<=51)
-                helper.insertData("A"+i,"1","C",Integer.toString(randprice),"0");
-            else if(i<=68)
-                helper.insertData("A"+i,"2","A",Integer.toString(randprice),"0");
-            else if(i<=85)
-                helper.insertData("A"+i,"2","B",Integer.toString(randprice),"0");
-            else
-                helper.insertData("A"+i,"2","C",Integer.toString(randprice),"0");
+        helper = new LeafyDBhelper(this);
 
-        }
+
+
     }
+
 
     @Override
     public void onClick(View view) {
@@ -66,5 +51,18 @@ public class category extends AppCompatActivity implements View.OnClickListener 
                 startActivity(intent);
                 break;
         }
+        button1.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {               // this is for the refresh button in screen 2
+                for(int i=1;i<=100;++i){
+                    helper.updateQty(i+"",0+"");        // updating the quantities to 0
+
+                }
+                Toast.makeText(getApplicationContext(),"done",Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
+
 }

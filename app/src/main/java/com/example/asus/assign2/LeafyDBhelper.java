@@ -83,4 +83,13 @@ class LeafyDBhelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_NAME, "ID = ?",new String[] {id});
     }
+    public boolean updateQty(String id,String qty) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_1,id);
+        contentValues.put(COL_6,qty);
+        db.update(TABLE_NAME, contentValues, "ID = ?",new String[] { id });
+        Log.e("lets",""+db.update(TABLE_NAME, contentValues, "ID = ?",new String[] { id }));
+        return true;
+    }
 }

@@ -50,6 +50,7 @@ public class order2 extends AppCompatActivity {
             }
         }
         int total=0;
+        int sno=0;
         for(i=0;i<100;++i){
             total+=Integer.parseInt(q[i])*Integer.parseInt(p[i]);
             if(Integer.parseInt(q[i])>0){
@@ -58,7 +59,7 @@ public class order2 extends AppCompatActivity {
                 ll.addView(l2);
                 TextView nametext = new TextView(this);
                 nametext.setTextSize(20);
-                nametext.setText("          "+n[i]+"          ");
+                nametext.setText((++sno)+"          "+n[i]+"          ");
                 l2.addView(nametext);
                 TextView pricetext = new TextView(this);
                 pricetext.setTextSize(20);
